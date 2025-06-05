@@ -47,4 +47,9 @@ export class DoctorController {
     async remove(@Param('id') id: string): Promise<void> {
         return await this.doctorService.remove(+id);
     }
+
+    @Get('search')
+    async searchDoctors(@Query('name') name: string): Promise<Doctor[]> {
+        return await this.doctorService.searchDoctorsByName(name);
+    }
 }

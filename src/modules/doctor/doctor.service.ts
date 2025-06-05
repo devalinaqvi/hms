@@ -52,4 +52,14 @@ export class DoctorService {
         doctor.availability = availability;
         return await this.doctorRepository.save(doctor);
     }
+
+    async searchDoctorsByName(name: string): Promise<Doctor[]> {
+        if (!name) {
+            return [];
+        }
+        const query = this.doctorRepository.createQueryBuilder('doctor')
+            .where('doctor.name ILIKE :name', { name: `%${name}%` })
+            .andWhere('doctor.isActive = true');
+        return await query.getMany();
+    }
 }
